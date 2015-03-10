@@ -1,7 +1,6 @@
 /** @jsx React.DOM */
 
-var Element = React.createClass({
-
+var Player = React.createClass({
     propTypes: function(){
       return {
         initialTicks: React.PropTypes.int,
@@ -12,7 +11,7 @@ var Element = React.createClass({
     getDefaultProps: function(){
         return {
           initialTicks: 0,
-          initialTickSpeed: 50
+          initialTickSpeed: 1000
         };
     },
 
@@ -24,7 +23,6 @@ var Element = React.createClass({
     },
 
     componentDidMount: function(){
-      console.log(this.state);
         this.timer = setInterval(this.tick, this.state.tickSpeed);
     },
 
@@ -36,7 +34,22 @@ var Element = React.createClass({
         this.setState({ticks: this.state.ticks + 1});
     },
 
+    alert:function(){
+      alert("Hi");
+    },
+
     render: function() {
-        return <p>This example was started <b>{this.state.ticks} ticks</b> ago.</p>;
+        var clickHandle = this.alert;
+        return <div
+          className="ui button"
+          onClick={clickHandle}
+          >This example was started <b>{this.state.ticks} ticks</b> ago.
+        </div>;
     }
+});
+
+var Game = React.createClass({
+  render: function(){
+    return <Player/>;
+  }
 });
