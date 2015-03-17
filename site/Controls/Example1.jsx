@@ -31,25 +31,43 @@ var Player = React.createClass({
     },
 
     tick: function(){
-        this.setState({ticks: this.state.ticks + 1});
+        //this.setState({ticks: this.state.ticks + 1});
     },
 
-    alert:function(){
-      alert("Hi");
+    clickHandle:function(){
+      this.setState({ticks: this.state.ticks + 1});
     },
 
     render: function() {
-        var clickHandle = this.alert;
-        return <div
+        var clickHandle = this.clickHandle;
+        return
+        <div
           className="ui button"
           onClick={clickHandle}
-          >This example was started <b>{this.state.ticks} ticks</b> ago.
+        >
+          This example was started <b>{this.state.ticks} ticks</b> ago.
         </div>;
     }
 });
 
+var Monster = React.createClass({
+  render: function(){
+    return <div className="ui label">
+              Monster
+              <div className="detail">
+                <div className="ui indicating progress" data-value="1" data-total="20">
+                <div className="bar">
+                  <div className="progress"></div>
+                </div>
+                <div className="label">Heath</div>
+              </div>
+            </div>
+          </div>;
+  }
+});
+
 var Game = React.createClass({
   render: function(){
-    return <Player/>;
+    return <div><Monster/><Player/></div>;
   }
 });
