@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var Player = React.createClass({
     propTypes: function(){
       return {
@@ -40,11 +38,7 @@ var Player = React.createClass({
 
     render: function() {
         var clickHandle = this.clickHandle;
-        return
-        <div
-          className="ui button"
-          onClick={clickHandle}
-        >
+        return <div className="ui button" onClick={clickHandle}>
           This example was started <b>{this.state.ticks} ticks</b> ago.
         </div>;
     }
@@ -68,6 +62,6 @@ var Monster = React.createClass({
 
 var Game = React.createClass({
   render: function(){
-    return <div><Monster/><Player/></div>;
+    return <div><Player></Player></div>;
   }
 });
