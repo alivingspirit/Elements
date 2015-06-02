@@ -1,3 +1,12 @@
+var GameState = (function(){
+  var module = {};
+
+  module.ticks = 0;
+  module.tickSpeed = 0;
+
+  return module;
+})();
+
 var Player = React.createClass({
     propTypes: function(){
       return {
@@ -44,17 +53,30 @@ var Player = React.createClass({
     }
 });
 
+var ProgressBar = React.createClass({
+  render: function(){
+    return <div className="ui grid">
+      <div className="eight wide column">
+        <div className="label">Heath</div>
+      </div>
+      <div className="eight wide column">
+        <div className="ui small indicating progress" data-value="50" data-total="200">
+          <div className="bar">
+            <div className="progress"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    ;
+  }
+});
+
 var Monster = React.createClass({
   render: function(){
-    return <div className="ui label">
+    return <div className="ui panel">
               Monster
               <div className="detail">
-                <div className="ui indicating progress" data-value="1" data-total="20">
-                <div className="bar">
-                  <div className="progress"></div>
-                </div>
-                <div className="label">Heath</div>
-              </div>
+              <ProgressBar></ProgressBar>
             </div>
           </div>;
   }
@@ -62,6 +84,6 @@ var Monster = React.createClass({
 
 var Game = React.createClass({
   render: function(){
-    return <div><Player></Player></div>;
+    return <div><Player></Player><Monster></Monster></div>;
   }
 });
