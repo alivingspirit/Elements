@@ -1,4 +1,5 @@
 "use strict";
+var ProgressBar = ReactBootstrap.ProgressBar;
 
 var GameState = (function () {
   var module = {};
@@ -49,18 +50,7 @@ var Player = React.createClass({
 
   render: function render() {
     var clickHandle = this.clickHandle;
-    return React.createElement(
-      "div",
-      { className: "ui button", onClick: clickHandle },
-      "This example was started ",
-      React.createElement(
-        "b",
-        null,
-        this.state.ticks,
-        " ticks"
-      ),
-      " ago."
-    );
+    return React.createElement("div", { className: "ui button", onClick: clickHandle }, "This example was started ", React.createElement("b", null, this.state.ticks, " ticks"), " ago.");
   }
 });
 
@@ -68,32 +58,7 @@ var ProgressBar = React.createClass({
   displayName: "ProgressBar",
 
   render: function render() {
-    return React.createElement(
-      "div",
-      { className: "ui grid" },
-      React.createElement(
-        "div",
-        { className: "eight wide column" },
-        React.createElement(
-          "div",
-          { className: "label" },
-          "Heath"
-        )
-      ),
-      React.createElement(
-        "div",
-        { className: "eight wide column" },
-        React.createElement(
-          "div",
-          { className: "ui small indicating progress", "data-value": "50", "data-total": "200" },
-          React.createElement(
-            "div",
-            { className: "bar" },
-            React.createElement("div", { className: "progress" })
-          )
-        )
-      )
-    );
+    return React.createElement("div", { className: "ui grid" }, React.createElement("div", { className: "eight wide column" }, React.createElement("div", { className: "label" }, "Heath")), React.createElement("div", { className: "eight wide column" }, React.createElement("div", { className: "ui small indicating progress", "data-value": "50", "data-total": "200" }, React.createElement("div", { className: "bar" }, React.createElement("div", { className: "progress" })))));
   }
 });
 
@@ -101,16 +66,7 @@ var Monster = React.createClass({
   displayName: "Monster",
 
   render: function render() {
-    return React.createElement(
-      "div",
-      { className: "ui panel" },
-      "Monster",
-      React.createElement(
-        "div",
-        { className: "detail" },
-        React.createElement(ProgressBar, null)
-      )
-    );
+    return React.createElement("div", { className: "ui panel" }, "Monster", React.createElement("div", { className: "detail" }, React.createElement(ProgressBar, null)));
   }
 });
 
@@ -118,12 +74,7 @@ var Game = React.createClass({
   displayName: "Game",
 
   render: function render() {
-    return React.createElement(
-      "div",
-      null,
-      React.createElement(Player, null),
-      React.createElement(Monster, null)
-    );
+    return React.createElement("div", null, React.createElement(Player, null), React.createElement(Monster, null));
   }
 });
 
