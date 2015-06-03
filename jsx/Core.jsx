@@ -1,3 +1,6 @@
+var ProgressBar = ReactBootstrap.ProgressBar;
+var Button = ReactBootstrap.Button;
+
 var GameState = (function(){
   var module = {};
 
@@ -10,80 +13,62 @@ var GameState = (function(){
 var Player = React.createClass({
     propTypes: function(){
       return {
-        initialTicks: React.PropTypes.int,
-        initialTickSpeed: React.PropTypes.int
+        tick: React.PropTypes.function,
+        ticks: 0
       }
     },
 
-    getDefaultProps: function(){
-        return {
-          initialTicks: 0,
-          initialTickSpeed: 1000
-        };
-    },
-
-    getInitialState: function(){
-        return {
-            ticks: this.props.initialTicks,
-            tickSpeed: this.props.initialTickSpeed
-          };
-    },
-
-    componentDidMount: function(){
-        this.timer = setInterval(this.tick, this.state.tickSpeed);
-    },
-
-    componentWillUnmount: function(){
-        clearInterval(this.timer);
-    },
-
-    tick: function(){
-        //this.setState({ticks: this.state.ticks + 1});
-    },
-
-    clickHandle:function(){
-      this.setState({ticks: this.state.ticks + 1});
-    },
+    // componentDidMount: function(){
+    //     this.timer = setInterval(this.tick, this.state.tickSpeed);
+    // },
+    //
+    // componentWillUnmount: function(){
+    //     clearInterval(this.timer);
+    // },
 
     render: function() {
-        var clickHandle = this.clickHandle;
-        return <div className="ui button" onClick={clickHandle}>
-          This example was started <b>{this.state.ticks} ticks</b> ago.
-        </div>;
+        return <Button onClick={this.props.tick}>This example was started <b>{this.props.ticks} ticks</b> ago.</Button>;
     }
-});
-
-var ProgressBar = React.createClass({
-  render: function(){
-    return <div className="ui grid">
-      <div className="eight wide column">
-        <div className="label">Heath</div>
-      </div>
-      <div className="eight wide column">
-        <div className="ui small indicating progress" data-value="50" data-total="200">
-          <div className="bar">
-            <div className="progress"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    ;
-  }
 });
 
 var Monster = React.createClass({
   render: function(){
     return <div className="ui panel">
               Monster
-              <div className="detail">
-              <ProgressBar></ProgressBar>
-            </div>
-          </div>;
+                <ProgressBar now={this.props.ticks} label='%(percent)s%'></ProgressBar>
+            </div>;
   }
 });
 
 var Game = React.createClass({
+
+  propTypes: function(){
+    return {
+      initialTicks: React.PropTypes.int,
+      initialTickSpeed: React.PropTypes.int,
+      tick: React.PropTypes.function
+    }
+  },
+
+  getDefaultProps: function(){
+      return {
+        initialTicks: 0,
+        initialTickSpeed: 1000
+      };
+  },
+
+  tick: function(){
+      this.setState({ticks: this.state.ticks + 1});
+  },
+
+  getInitialState: function(){
+      return {
+          ticks: this.props.initialTicks,
+          tickSpeed: this.props.initialTickSpeed
+        };
+  },
+
   render: function(){
-    return <div><Player></Player><Monster></Monster></div>;
+    return <div><Player ticks={this.state.ticks} tick={this.tick}></Player><Monster ticks={this.state.ticks}></Monster></div>;
   }
 });
