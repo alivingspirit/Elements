@@ -2,6 +2,9 @@
 
 var ProgressBar = ReactBootstrap.ProgressBar;
 var Button = ReactBootstrap.Button;
+var Panel = ReactBootstrap.Panel;
+var Grid = ReactBootstrap.Grid;
+var Row = ReactBootstrap.Row;
 
 var GameState = (function () {
   var module = {};
@@ -90,10 +93,10 @@ var Game = React.createClass({
 
   render: function render() {
     return React.createElement(
-      "div",
+      Panel,
       null,
-      React.createElement(Player, { ticks: this.state.ticks, tick: this.tick }),
-      React.createElement(Monster, { ticks: this.state.ticks })
+      React.createElement(Monster, { ticks: this.state.ticks }),
+      React.createElement(Player, { ticks: this.state.ticks, tick: this.tick })
     );
   }
 });

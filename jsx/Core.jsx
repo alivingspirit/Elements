@@ -1,5 +1,8 @@
 var ProgressBar = ReactBootstrap.ProgressBar;
 var Button = ReactBootstrap.Button;
+var Panel = ReactBootstrap.Panel;
+var Grid = ReactBootstrap.Grid;
+var Row = ReactBootstrap.Row;
 
 var GameState = (function(){
   var module = {};
@@ -69,6 +72,9 @@ var Game = React.createClass({
   },
 
   render: function(){
-    return <div><Player ticks={this.state.ticks} tick={this.tick}></Player><Monster ticks={this.state.ticks}></Monster></div>;
+    return <Panel>
+            <Monster ticks={this.state.ticks}></Monster>
+            <Player ticks={this.state.ticks} tick={this.tick}></Player>
+          </Panel>;
   }
 });
