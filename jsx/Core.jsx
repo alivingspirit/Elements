@@ -4,14 +4,14 @@ var Panel = ReactBootstrap.Panel;
 var Grid = ReactBootstrap.Grid;
 var Row = ReactBootstrap.Row;
 
-var GameState = (function(){
-  var module = {};
+class GameState {
+  constructor() {
+    this.ticks = 0;
+    this.tickSpeed = 0;
 
-  module.ticks = 0;
-  module.tickSpeed = 0;
-
-  return module;
-})();
+    this.monsters = [ { name: "Rat", health: 20, key: 1 } ];
+  }
+}
 
 var Player = React.createClass({
     propTypes: function(){
@@ -21,14 +21,6 @@ var Player = React.createClass({
       }
     },
 
-    // componentDidMount: function(){
-    //     this.timer = setInterval(this.tick, this.state.tickSpeed);
-    // },
-    //
-    // componentWillUnmount: function(){
-    //     clearInterval(this.timer);
-    // },
-
     render: function() {
         return <Button onClick={this.props.tick}>This example was started <b>{this.props.ticks} ticks</b> ago.</Button>;
     }
@@ -37,44 +29,34 @@ var Player = React.createClass({
 var Monster = React.createClass({
   render: function(){
     return <div className="ui panel">
-              Monster
-                <ProgressBar now={this.props.ticks} label='%(percent)s%'></ProgressBar>
+              {this.props.stuff.name}
+                <ProgressBar now={this.props.stuff.health} label='%(percent)s%' ></ProgressBar>
+                <Button onClick={ () => this.props.attackMonster(this.props.index)} >Attack</Button>
             </div>;
   }
+
 });
 
 var Game = React.createClass({
 
-  propTypes: function(){
-    return {
-      initialTicks: React.PropTypes.int,
-      initialTickSpeed: React.PropTypes.int,
-      tick: React.PropTypes.function
-    }
-  },
-
   getDefaultProps: function(){
       return {
-        initialTicks: 0,
-        initialTickSpeed: 1000
+        gameState: new GameState()
       };
   },
 
-  tick: function(){
-      this.setState({ticks: this.state.ticks + 1});
+  attackMonster: function(monsterIndex){
+      this.props.gameState.monsters[0].health -= 1;
+      this.setState(this.props.gameState);
   },
 
   getInitialState: function(){
-      return {
-          ticks: this.props.initialTicks,
-          tickSpeed: this.props.initialTickSpeed
-        };
+      return this.props.gameState;
   },
 
   render: function(){
     return <Panel>
-            <Monster ticks={this.state.ticks}></Monster>
-            <Player ticks={this.state.ticks} tick={this.tick}></Player>
+            {this.state.monsters.map( (m, i) => <Monster attackMonster={this.attackMonster} stuff={m} key={m.key} index={i}></Monster>)}
           </Panel>;
   }
 });
