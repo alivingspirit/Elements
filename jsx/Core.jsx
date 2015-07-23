@@ -6,10 +6,16 @@ var Row = ReactBootstrap.Row;
 
 class GameState {
   constructor() {
+    this.nextKey = 1;
     this.ticks = 0;
     this.tickSpeed = 0;
 
-    this.monsters = [ { name: "Rat", health: 20, key: 1 } ];
+    this.monsters = [ ];
+  }
+
+  addMonster() {
+    this.monsters.push({ name: "Rat", health: 20, key: this.nextKey });
+    this.nextKey++;
   }
 }
 
@@ -40,13 +46,16 @@ var Monster = React.createClass({
 var Game = React.createClass({
 
   getDefaultProps: function(){
+    let gameState = new GameState();
+    gameState.addMonster();
+    gameState.addMonster();
       return {
-        gameState: new GameState()
+        gameState
       };
   },
 
   attackMonster: function(monsterIndex){
-      this.props.gameState.monsters[0].health -= 1;
+      this.props.gameState.monsters[monsterIndex].health -= 1;
       this.setState(this.props.gameState);
   },
 

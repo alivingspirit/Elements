@@ -1,5 +1,7 @@
 "use strict";
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ProgressBar = ReactBootstrap.ProgressBar;
@@ -8,14 +10,27 @@ var Panel = ReactBootstrap.Panel;
 var Grid = ReactBootstrap.Grid;
 var Row = ReactBootstrap.Row;
 
-var GameState = function GameState() {
-  _classCallCheck(this, GameState);
+var GameState = (function () {
+  function GameState() {
+    _classCallCheck(this, GameState);
 
-  this.ticks = 0;
-  this.tickSpeed = 0;
+    this.nextKey = 1;
+    this.ticks = 0;
+    this.tickSpeed = 0;
 
-  this.monsters = [{ name: "Rat", health: 20, key: 1 }];
-};
+    this.monsters = [];
+  }
+
+  _createClass(GameState, [{
+    key: "addMonster",
+    value: function addMonster() {
+      this.monsters.push({ name: "Rat", health: 20, key: this.nextKey });
+      this.nextKey++;
+    }
+  }]);
+
+  return GameState;
+})();
 
 var Player = React.createClass({
   displayName: "Player",
@@ -70,13 +85,16 @@ var Game = React.createClass({
   displayName: "Game",
 
   getDefaultProps: function getDefaultProps() {
+    var gameState = new GameState();
+    gameState.addMonster();
+    gameState.addMonster();
     return {
-      gameState: new GameState()
+      gameState: gameState
     };
   },
 
   attackMonster: function attackMonster(monsterIndex) {
-    this.props.gameState.monsters[0].health -= 1;
+    this.props.gameState.monsters[monsterIndex].health -= 1;
     this.setState(this.props.gameState);
   },
 
